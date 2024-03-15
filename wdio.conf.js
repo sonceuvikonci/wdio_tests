@@ -45,22 +45,6 @@ export const baseConfig = {
     // from the same test should run tests.
     //
     maxInstances: 10,
-    //
-    // If you have trouble getting all important capabilities together, check out the
-    // Sauce Labs platform configurator - a great tool to configure your capabilities:
-    // https://saucelabs.com/platform/platform-configurator
-    //
-    // capabilities: [
-    //     {
-    //         browserName: "chrome"
-    //     },
-    //     {
-    //         browserName: "firefox"
-    //     },
-    //     {
-    //         browserName: "MicrosoftEdge"
-    //     }
-    // ],
 
     //
     // ===================

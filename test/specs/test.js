@@ -10,7 +10,7 @@ describe('Saucedemo tests', () => {
 
         await $('.title').waitForDisplayed()
         await expect(await $('.title')).toHaveText('Products')
-        await expect(await $('.shopping_cart_link')).toBeDisplayed()
+        await expect(await $('.shopping_cart_link')).toBeDisplayed('')
         await expect(await $$('.inventory_item')).toBeElementsArrayOfSize({ gte: 1 })
     });
 
@@ -38,8 +38,6 @@ describe('Saucedemo tests', () => {
 
         //add product to cart
         const productName = await productTitle.getText()
-
-        console.log("productName " + productName)
         await (await addToCartButton).click()
         await expect(await cartRoductsNumber).toHaveText('1')
 
