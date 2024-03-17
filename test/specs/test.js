@@ -1,40 +1,36 @@
 import { expect, browser, $ } from '@wdio/globals'
 
 describe('Saucedemo tests', () => {
-    it('Perform Login', async () => {
-        await browser.url('https://www.saucedemo.com')
-
-        await $('#user-name').setValue('standard_user')
-        await $('#password').setValue('secret_sauce')
-        await $('#login-button').click()
-
-        await $('.title').waitForDisplayed()
-        await expect(await $('.title')).toHaveText('Products')
-        await expect(await $('.shopping_cart_link')).toBeDisplayed('')
-        await expect(await $$('.inventory_item')).toBeElementsArrayOfSize({ gte: 1 })
-    });
-
-    it('Add product to the cart', async () => {
-
-        await browser.url('https://www.saucedemo.com')
-
-        //locators
+    beforeEach(async () => {
         const username = $('#user-name');
         const password = $('#password');
         const loginButton = $('#login-button');
-        const productCard = $$('.inventory_item');
+        const titleText = $('.title');
+
+        await browser.url('/')
+        await username.setValue('standard_user')
+        await password.setValue('secret_sauce')
+        await loginButton.click()
+        await titleText.waitForDisplayed()
+    });
+
+    it('Perform Login test', async () => {
+        const titleText = $('.title');
+        const cartLink = $('.shopping_cart_link');
+        const productCardList = $$('.inventory_item');
+
+        await expect(await titleText).toHaveText('Products')
+        await expect(await cartLink).toBeDisplayed('')
+        await expect(await productCardList).toBeElementsArrayOfSize({ gte: 1 })
+    });
+
+    it('Add product to the cart test', async () => {
         const productTitle = $('.inventory_item:nth-of-type(1) [class*="item_name"]');
         const addToCartButton = $('.inventory_item:nth-of-type(1) [data-test*="add-to-cart"]');
         const cartRoductsNumber = $('.shopping_cart_badge');
         const cartLink = $('.shopping_cart_link');
         const productInCartTitle = $('.cart_item  [class*="item_name"]');
         const removeProductButton = $('.cart_item [data-test*="remove"]');
-
-        //login
-        await username.setValue('standard_user')
-        await password.setValue('secret_sauce')
-        await loginButton.click()
-        await expect(await productCard).toBeElementsArrayOfSize({ gte: 1 })
 
         //add product to cart
         const productName = await productTitle.getText()
